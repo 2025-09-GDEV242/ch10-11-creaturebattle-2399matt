@@ -1,9 +1,10 @@
 
 /**
- * Write a description of class Demon here.
+ * Demon class. Demons are a special type of Creature in which all Demons
+ * have a chance to do +50 magic damage on attack.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Matt Witham
+ * @version 11.4.25
  */
 public class Demon extends Creature
 {
@@ -17,6 +18,10 @@ public class Demon extends Creature
         super(str, hp);
     }
     
+    /**
+     * attack method for the Demons. Dice is rolled for the chance to do bonus magic dmg.
+     * @return the attack value from the Demon.
+     */
     @Override
     public int attack() {
         int dmg = super.attack();

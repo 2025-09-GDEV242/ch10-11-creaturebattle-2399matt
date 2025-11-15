@@ -7,8 +7,9 @@
  * the creature is alive or knocked out. The creature is also responsible for calculating
  * damage delivered based on the creature's strength (1 to str) 
  * 
+ * @author Matt Witham
  * @author Crosbie
- * @version 2025-04 v1.0
+ * @version 11.4.25
  */
 // we will learn what the abstract keyword does in a later chapter
 public abstract class Creature

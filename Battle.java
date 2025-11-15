@@ -1,27 +1,17 @@
 import java.util.List;
 import java.util.ArrayList;
 /**
- * Write a description of class Battle here.
+ * Battle class used to simulate the GREAT battle between good and evil.
+ * This class holds two lists for the armies, as well as a StatTracker object for the battle stats.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Matt Witham
+ * @version 11.4.25
  */
 public class Battle
-{
-    private static final int EVIL_DMG_INDEX = 0;
-    private static final int GOOD_DMG_INDEX = 1;
-    private static final int GOOD_HUMAN_COUNT_INDEX = 2;
-    private static final int ELF_COUNT_INDEX = 3;
-    private static final int ENT_COUNT_INDEX = 4;
-    private static final int EVIL_HUMAN_COUNT_INDEX = 5;
-    private static final int CYBERDEMON_COUNT_INDEX = 6;
-    private static final int BALROG_COUNT_INDEX = 7;
-    private static final int EVIL_BLOWS_INDEX = 8;
-    private static final int GOOD_BLOWS_INDEX = 9;
-    
+{   
     private final List<Creature> evilArmy;
     private final List<Creature> goodArmy;
-    private int[] statTracker;
+    private StatTracker statTracker;
 
     /**
      * Constructor for objects of class Battle
@@ -30,10 +20,15 @@ public class Battle
     {
         evilArmy = new ArrayList<>();
         goodArmy = new ArrayList<>();
-        statTracker = new int[10];
+        statTracker = new StatTracker();
         initArmies();
     }
     
+    /**
+     * War method. Runs a main loop for the battle in which two oponents fight 1v1
+     * until one of them dies. Once one dies, the army sends out the next soldier to fight.
+     * When the battle is over, stats are displayed.
+     */
     public void war() {
         while(!evilArmy.isEmpty() && !goodArmy.isEmpty()) {
             // we can avoid shifting after every death.
@@ -46,73 +41,61 @@ public class Battle
                 int evilAttack = evil.attack();
                 evil.takeDamage(goodAttack);
                 good.takeDamage(evilAttack);
-                statTracker[EVIL_DMG_INDEX] += evilAttack;
-                statTracker[GOOD_DMG_INDEX] += goodAttack;
+                statTracker.addDamageToEvil(evilAttack);
+                statTracker.addDamageToGood(goodAttack);
             }
             if(good.isKnockedOut()) {
                 goodArmy.remove(goodIndex);
-                statTracker[EVIL_BLOWS_INDEX]++;
+                statTracker.incEvilKills();
             } else {
                 evilArmy.remove(evilIndex);
-                statTracker[GOOD_BLOWS_INDEX]++;
+                statTracker.incGoodKills();
             }
         }
         if(goodArmy.isEmpty()) {
             System.out.println("SAURON WINS!\n\n");
-        } else {
+        } else if (evilArmy.isEmpty()){
             System.out.println("MIDDLE-EARTH WINS!\n\n");
+        } else {
+            System.out.println("NOBODY WINS!\n\n");
         }
-        displayDamageStats();
-        displayArmyStats();
+        statTracker.displayDamageStats();
+        statTracker.displayArmyStats();
     }
     
+    /**
+     * initArmies method is used to initialize the lists holding the armies.
+     */
     private void initArmies() {
         for(int i = 0; i < 100; i++) {
             int n = Randomizer.nextInt(10);
             if(n < 7) {
                 goodArmy.add(new Human());
-                statTracker[GOOD_HUMAN_COUNT_INDEX]++;
+                statTracker.incGoodHuman();
             } else if (n < 9) {
                 goodArmy.add(new Elf());
-                statTracker[ELF_COUNT_INDEX]++;
+                statTracker.incElf();
             } else {
                 goodArmy.add(new Ent());
-                statTracker[ENT_COUNT_INDEX]++;
+                statTracker.incEnt();
             }
         }
         for(int i = 0; i < 40; i++) {
             int n = Randomizer.nextInt(25);
-            if(n <= 18) {
+            if(n <= 12) {
                 evilArmy.add(new Human());
-                statTracker[EVIL_HUMAN_COUNT_INDEX]++;
+                statTracker.incEvilHuman();
+            } else if (n <= 18) {
+                evilArmy.add(new UrukHai());
+                statTracker.incUrukHai();
             } else if (n <= 24) {
                 evilArmy.add(new CyberDemon());
-                statTracker[CYBERDEMON_COUNT_INDEX]++;
+                statTracker.incCyberDemon();
             } else {
                 evilArmy.add(new Balrog());
-                statTracker[BALROG_COUNT_INDEX]++;
+                statTracker.incBalrog();
             }
         }
-    }
-    
-    private void displayDamageStats() {
-        System.out.println("Damage done by evil army: " + statTracker[EVIL_DMG_INDEX]);
-        System.out.println("Killing blows by evil army: " + statTracker[EVIL_BLOWS_INDEX]);
-        System.out.println("Damage done by good army: " + statTracker[GOOD_DMG_INDEX]);
-        System.out.println("Killing blows by good army: " + statTracker[GOOD_BLOWS_INDEX]);
-    }
-    
-    private void displayArmyStats() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\n\nGOOD ARMY:\n");
-        sb.append("Humans:").append(statTracker[GOOD_HUMAN_COUNT_INDEX]).append("\n");
-        sb.append("Elves:").append(statTracker[ELF_COUNT_INDEX]).append("\n");
-        sb.append("Ents:").append(statTracker[ENT_COUNT_INDEX]).append("\n\n");
-        sb.append("EVIL ARMY:\n");
-        sb.append("Humans:").append(statTracker[EVIL_HUMAN_COUNT_INDEX]).append("\n");
-        sb.append("CyberDemons:").append(statTracker[CYBERDEMON_COUNT_INDEX]).append("\n");
-        sb.append("Balrogs:").append(statTracker[BALROG_COUNT_INDEX]).append("\n");
-        System.out.println(sb.toString());
     }
 
 }

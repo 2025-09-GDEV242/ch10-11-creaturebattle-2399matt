@@ -14,7 +14,7 @@ public class Elf extends Creature
     private static int MIN_DMG = 5;
 
     /**
-     * Constructor for objects of class Elf
+     * Constructor for Elf object. 
      */
     public Elf()
     {
@@ -24,6 +24,10 @@ public class Elf extends Creature
         );
     }
     
+    /**
+     * attack method used by the elves. Elves have a chance to do increased damage.
+     * @return The attack damage value from the elf.
+     */
     @Override
     public int attack() {
         int attackDmg = super.attack();

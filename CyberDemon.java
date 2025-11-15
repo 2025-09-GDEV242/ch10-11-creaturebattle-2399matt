@@ -1,9 +1,10 @@
 
 /**
- * Write a description of class CyberDemon here.
+ * CyberDemon class. CyberDemons are of type Demon. They have no unique abilities other than
+ * the Demon bonus damage chance. (The only thing they fear is you).
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Matt Witham
+ * @version 11.4.25
  */
 public class CyberDemon extends Demon
 {

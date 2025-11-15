@@ -1,9 +1,10 @@
 
 /**
- * Write a description of class Balrog here.
+ * Balrog class. The Balrog is an ancient Demon who inherits from Creature. Balrog's have the 
+ * ability to attack twice in each round.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Matt Witham
+ * @version 11.4.25
  */
 public class Balrog extends Demon
 {
@@ -22,6 +23,9 @@ public class Balrog extends Demon
         );
     }
     
+    /**
+     * attack method for the Balrog. Balrog's attack TWICE per round.
+     */
     @Override
     public int attack() {
         int firstHit = super.attack();

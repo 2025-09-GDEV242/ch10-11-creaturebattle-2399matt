@@ -2,8 +2,8 @@
 /**
  * Write a description of class Ent here.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Matt Witham
+ * @version 11.4.25
  */
 public class Ent extends Creature
 {
