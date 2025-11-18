@@ -1,6 +1,7 @@
 
 /**
- * Write a description of class Ent here.
+ * Ent class. Ents are part of the "good" Middle-Earth races (although they're on nobody's side).
+ * Ents are fairly strong. Don't make them angry.
  *
  * @author Matt Witham
  * @version 11.4.25
